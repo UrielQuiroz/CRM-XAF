@@ -16,71 +16,83 @@ namespace CRM.Module.BusinessObjects
 {
     [DefaultClassOptions]
     public class Company : BaseObject
-    {
+    { 
         public Company(Session session) : base(session)
         {
+
         }
+
         public override void AfterConstruction()
         {
             base.AfterConstruction();
         }
 
 
-        bool shipToBilling;
-        string shippingAddress;
-        string billingAddress;
-        string phoneNumber;
-        string webSite;
-        string companyName;
 
+
+        private string _CompanyName;
+
+        [RuleRequiredField]
+        [RuleUniqueValue ]
         public string CompanyName
         {
-            get => companyName;
-            set => SetPropertyValue(nameof(CompanyName), ref companyName, value);
+            get { return _CompanyName; }
+            set { SetPropertyValue<string>(nameof(CompanyName), ref _CompanyName, value); }
         }
 
 
-        public string WebSite
+
+        private string _WebSite;
+        public string WebSite 
         {
-            get => webSite;
-            set => SetPropertyValue(nameof(WebSite), ref webSite, value);
+            get { return _WebSite; }
+            set { SetPropertyValue<string>(nameof(WebSite), ref _WebSite, value); }
         }
 
 
+
+        private string _PhoneNumber;
         public string PhoneNumber
         {
-            get => phoneNumber;
-            set => SetPropertyValue(nameof(PhoneNumber), ref phoneNumber, value);
+            get { return _PhoneNumber; }
+            set { SetPropertyValue<string>(nameof(PhoneNumber), ref _PhoneNumber, value); }
         }
 
 
+        private string _BillingAddress;
         public string BillingAddress
         {
-            get => billingAddress;
-            set => SetPropertyValue(nameof(BillingAddress), ref billingAddress, value);
+            get { return _BillingAddress; }
+            set { SetPropertyValue<string>(nameof(BillingAddress), ref _BillingAddress, value); }
         }
 
 
+
+        private string _ShippingAddress;
         public string ShippingAddress
         {
-            get => shippingAddress;
-            set => SetPropertyValue(nameof(ShippingAddress), ref shippingAddress, value);
+            get { return _ShippingAddress; }
+            set { SetPropertyValue<string>(nameof(ShippingAddress), ref _ShippingAddress, value); }
         }
 
-        
+
+
+        private bool _ShipToBilling;
+        [ImmediatePostData]
         public bool ShipToBilling
         {
-            get => shipToBilling;
-            set => SetPropertyValue(nameof(ShipToBilling), ref shipToBilling, value);
+            get { return _ShipToBilling; }
+            set { SetPropertyValue<bool>(nameof(ShipToBilling), ref _ShipToBilling, value); }
         }
 
 
-        [DevExpress.Xpo.Aggregated, Association]
+        [DevExpress.Xpo.Aggregated, Association("Company-CompanyContact")]
         public XPCollection<CompanyContact> Contacts
         {
             get { return GetCollection<CompanyContact>(nameof(Contacts)); }
         }
 
 
-    }
+
+    } 
 }

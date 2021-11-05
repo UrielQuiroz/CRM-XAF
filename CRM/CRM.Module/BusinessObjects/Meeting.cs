@@ -20,6 +20,7 @@ namespace CRM.Module.BusinessObjects
     {
         public Meeting(Session session) : base(session)
         {
+
         }
         public override void AfterConstruction()
         {
@@ -28,22 +29,25 @@ namespace CRM.Module.BusinessObjects
 
 
 
-        CompanyContact primaryContact;
-        Company company;
-
+        private Company _Company;
+        [ImmediatePostData]
         public Company Company
         {
-            get => company;
-            set => SetPropertyValue(nameof(Company), ref company, value);
+            get { return _Company; }
+            set { SetPropertyValue<Company>(nameof(Company), ref _Company, value); }
         }
 
 
+        private CompanyContact _PrimaryContact;
         [DataSourceProperty("Company.Contacts")]
         public CompanyContact PrimaryContact
         {
-            get => primaryContact;
-            set => SetPropertyValue(nameof(PrimaryContact), ref primaryContact, value);
+            get { return _PrimaryContact; }
+            set { SetPropertyValue<CompanyContact>(nameof(PrimaryContact), ref _PrimaryContact, value); }
         }
+
+
+
 
     }
 }
